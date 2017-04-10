@@ -23,12 +23,12 @@
 namespace android {
 
 void MinikinRefCounted::Ref() {
-    AutoMutex _l(gMinikinLock);
+    std::lock_guard<std::mutex> _l(gMinikinLock);
     this->RefLocked();
 }
 
 void MinikinRefCounted::Unref() {
-    AutoMutex _l(gMinikinLock);
+    std::lock_guard<std::mutex> _l(gMinikinLock);
     this->UnrefLocked();
 }
 

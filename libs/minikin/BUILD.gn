@@ -1,0 +1,79 @@
+# Copyright (C) 2017 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+config("minikin_config") {
+  include_dirs = [ "../../include" ]
+}
+
+action("gen_unicode_data") {
+  script = "unicode_emoji_h_gen.py"
+
+  inputs = [
+    "emoji-data.txt",
+  ]
+
+  outputs = [
+    "$target_gen_dir/include/generated/UnicodeData.h",
+  ]
+
+  args = [
+    "--input", rebase_path("emoji-data.txt"),
+    "--output", rebase_path("$target_gen_dir/include/generated/UnicodeData.h"),
+  ]
+}
+
+static_library("minikin") {
+  sources = [
+    "AnalyzeStyle.cpp",
+    "CmapCoverage.cpp",
+    "FontCollection.cpp",
+    "FontFamily.cpp",
+    "FontLanguage.cpp",
+    "FontLanguage.h",
+    "FontLanguageListCache.cpp",
+    "FontLanguageListCache.h",
+    "GraphemeBreak.cpp",
+    "HbFontCache.cpp",
+    "HbFontCache.h",
+    "Hyphenator.cpp",
+    "Layout.cpp",
+    "LayoutUtils.cpp",
+    "LayoutUtils.h",
+    "LineBreaker.cpp",
+    "Measurement.cpp",
+    "MinikinFont.cpp",
+    "MinikinFontFreeType.cpp",
+    "MinikinInternal.cpp",
+    "MinikinInternal.h",
+    "MinikinRefCounted.cpp",
+    "SparseBitSet.cpp",
+    "WordBreaker.cpp",
+  ]
+
+  public_configs = [ ":minikin_config" ]
+
+  include_dirs = [
+    "$target_gen_dir/include",
+  ]
+
+  deps = [
+    ":gen_unicode_data",
+    "//third_party/android/log",
+    "//third_party/android/utils",
+    "//third_party/freetype2",
+    "//third_party/harfbuzz",
+    "//third_party/icu:icuuc",
+    "//third_party/zlib",
+  ]
+}

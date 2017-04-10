@@ -18,6 +18,7 @@
 #define MINIKIN_LAYOUT_UTILS_H
 
 #include <stdint.h>
+#include <stdlib.h>
 
 /**
  * Return offset of previous word break. It is either < offset or == 0.

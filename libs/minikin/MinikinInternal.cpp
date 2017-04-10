@@ -25,7 +25,7 @@
 
 namespace android {
 
-Mutex gMinikinLock;
+std::mutex gMinikinLock;
 
 void assertMinikinLocked() {
 #ifdef ENABLE_RACE_DETECTION

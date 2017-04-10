@@ -55,7 +55,7 @@ hash_t FontStyle::hash() const {
 
 // static
 uint32_t FontStyle::registerLanguageList(const std::string& languages) {
-    AutoMutex _l(gMinikinLock);
+    std::lock_guard<std::mutex> _l(gMinikinLock);
     return FontLanguageListCache::getId(languages);
 }
 
@@ -77,7 +77,7 @@ FontFamily::~FontFamily() {
 }
 
 bool FontFamily::addFont(MinikinFont* typeface) {
-    AutoMutex _l(gMinikinLock);
+    std::lock_guard<std::mutex> _l(gMinikinLock);
     const uint32_t os2Tag = MinikinFont::MakeTag('O', 'S', '/', '2');
     HbBlob os2Table(getFontTable(typeface, os2Tag));
     if (os2Table.get() == nullptr) return false;
@@ -95,7 +95,7 @@ bool FontFamily::addFont(MinikinFont* typeface) {
 }
 
 void FontFamily::addFont(MinikinFont* typeface, FontStyle style) {
-    AutoMutex _l(gMinikinLock);
+    std::lock_guard<std::mutex> _l(gMinikinLock);
     addFontLocked(typeface, style);
 }
 
