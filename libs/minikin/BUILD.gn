@@ -67,13 +67,16 @@ static_library("minikin") {
     "$target_gen_dir/include",
   ]
 
-  deps = [
-    ":gen_unicode_data",
-    "//third_party/android/log",
+  public_deps = [
     "//third_party/android/utils",
     "//third_party/freetype2",
     "//third_party/harfbuzz",
     "//third_party/icu:icuuc",
+  ]
+
+  deps = [
+    ":gen_unicode_data",
+    "//third_party/android/log",
     "//third_party/zlib",
   ]
 }

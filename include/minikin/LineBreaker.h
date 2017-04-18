@@ -26,6 +26,7 @@
 #include "unicode/locid.h"
 #include <cmath>
 #include <vector>
+#include "minikin/FontCollection.h"
 #include "minikin/Hyphenator.h"
 #include "minikin/WordBreaker.h"
 
